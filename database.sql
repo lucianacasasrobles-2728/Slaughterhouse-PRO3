@@ -32,3 +32,5 @@ INSERT INTO animal_product VALUES
                                (1002, 501),
                                (1001, 502),
                                (1003, 502);
+
+
