@@ -1,58 +1,75 @@
-# Slaughterhouse – PRO3 Assignments 2 & 3
+# PRO3 – Slaughterhouse System
 
-## Project Description
+## Description
 
-This project is a simulation of a slaughterhouse developed for the PRO3 course at VIA University College.
+This project is a slaughterhouse system developed in Java using Spring Boot, PostgreSQL, REST and gRPC.
 
-The purpose of Assignment 2 is to implement a gRPC service that retrieves traceability information about animals and products from a PostgreSQL database.
+The system has three stations:
 
-The service supports two operations:
-- **GetAnimalsByProduct:** retrieves the registration numbers of all animals involved in a specific product.
-- **GetProductsByAnimal:** retrieves all products associated with a specific animal.
+1. **Animal Registration:** Registers animals and stores their information.
+2. **Cutting:** Registers animal parts and puts them into trays.
+3. **Packaging:** Creates products and connects them with trays.
 
-Assignment 3 extends the project by adding a RESTful web service to register animals and retrieve their information.
+The system also allows us to track which animals were used in a product and which products contain parts from a specific animal.
 
 ## Technologies
 
-- Java
-- Spring Boot
-- Maven
-- gRPC and Protocol Buffers
-- REST API
+- Java and Spring Boot
 - PostgreSQL
-- Spring JDBC
-- BloomRPC and Postman for testing
-- JUnit 5 and Mockito
-
-## Project Structure
-
-The application is organized into the following packages:
-
-- **model:** contains the Animal and Product classes.
-- **repository:** contains the database queries.
-- **service:** contains the application logic.
-- **grpc:** handles gRPC requests and responses.
-- **controller:** handles REST API requests.
-
-The `slaughterhouse.proto` file defines the gRPC service and its messages.
+- REST API
+- gRPC
+- Maven
+- Postman for testing
 
 ## Database
 
-The project uses PostgreSQL and three tables:
+The system uses PostgreSQL to store information about animals, animal parts, trays and products.
 
-- `animal`
-- `product`
-- `animal_product`
-
-The `animal_product` table connects animals and products.
-
-For Assignment 3, the `animal` table also stores the arrival date and origin (farm).
-
-The `database.sql` file contains SQL statements for database setup and sample data.
+The database tables are created using the `database.sql` file.
 
 ## How to Run
 
-1. Create a PostgreSQL database.
-2. Execute the `database.sql` script and ensure the `animal` table includes the `date` and `origin` columns.
-3. Configure the database connection in `application.properties`.
-4. Set the `DB_PASSWORD` environment variable with your Postgre
+1. Open the project in IntelliJ IDEA.
+2. Create and configure the PostgreSQL database.
+3. Run the `database.sql` file.
+4. Check the database connection in `application.properties`.
+5. Run the Spring Boot application.
+6. Use Postman to test the system.
+
+REST runs on port `8080` and gRPC on port `9090`.
+
+## Testing
+
+I tested the system using Postman.
+
+The following tests were successful:
+
+- Register animal parts.
+- Create trays.
+- Add parts to trays.
+- Check that the tray maximum weight is not exceeded.
+- Check that different meat types cannot be mixed in one tray.
+- Create products.
+- Add trays to products.
+- Get animals by product using gRPC.
+- Get products by animal using gRPC.
+
+For example, I created a product called **Beef Package** using meat from animal 1001.
+
+Using gRPC, I could find animal 1001 from the product ID and also find the product using the animal registration number.
+
+## Architecture
+
+The architecture is documented using three C4 diagrams:
+
+- C1 – System Context
+- C2 – Container
+- C3 – Component
+
+## Conclusion
+
+The three stations work together to register animals, manage meat parts and trays, and create products.
+
+The system uses REST for the station operations and gRPC for traceability.
+
+The main functionalities were tested successfully using Postman.
